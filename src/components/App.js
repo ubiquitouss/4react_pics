@@ -1,11 +1,35 @@
-import React from 'react'
-import SearchBar from './SearchBar'
+import React from 'react';
+import unsplash from '../api/unsplash'
+import SearchBar from './SearchBar';
 
-const App = () => {
-    return (
-    <div className =  "ui container" style = {{marginTop: '1rem'}}>
-        <SearchBar />
-    </div>)
+class App extends React.Component {
+    //! method 1 promise based
+    // onSearchSubmit (term) {
+    //     axios.get('https://api.unsplash.com/search/photos',{
+            
+    //         params: {query: term},
+    //         headers: {
+    //             Authorization: 'Client-ID xssC-DKI-UJwc86oPylMFWzoSYbBdPjYf9FQWJfTg9Q'
+    //         }
+    //     }).then((response)=>{console.log(response.data.results)})
+    // }
+    state = {images:[]}
+    //! method 2
+    onSearchSubmit = async (term)=>{
+        const response = await unsplash.get('/search/photos',{    
+            params: {query: term}, 
+        });
+
+        this.setState({images: response.data.results})
+    }
+
+    render() {
+        return (
+        <div className =  "ui container" style = {{marginTop: '1rem'}}>
+            <SearchBar userFormSubmit={this.onSearchSubmit}/>
+            Found: {this.state.images.length} images
+        </div>)
+    }
 }
 
 export default App
