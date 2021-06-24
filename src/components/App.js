@@ -1,6 +1,7 @@
 import React from 'react';
 import unsplash from '../api/unsplash'
 import SearchBar from './SearchBar';
+import ImageList from './ImageList';
 
 class App extends React.Component {
     //! method 1 promise based
@@ -28,6 +29,7 @@ class App extends React.Component {
         <div className =  "ui container" style = {{marginTop: '1rem'}}>
             <SearchBar userFormSubmit={this.onSearchSubmit}/>
             Found: {this.state.images.length} images
+            <ImageList images={this.state.images}/>
         </div>)
     }
 }
